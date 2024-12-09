@@ -4,33 +4,33 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <form (ngSubmit)="agregarGasto()">
-    <ion-item>
-      <ion-label position="floating">Monto</ion-label>
-      <ion-input type="number" [(ngModel)]="gasto.monto" name="monto" required></ion-input>
-    </ion-item>
+<ion-content class="ion-padding">
+  <div class="container" style="max-width: 500px; margin-top: 20px;">
+    <form (ngSubmit)="agregarGasto()">
+      
+      <ion-item class="mb-3">
+        <ion-label position="floating">Monto</ion-label>
+        <ion-input type="number" [(ngModel)]="gasto.monto" name="monto" required></ion-input>
+      </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Descripción</ion-label>
-      <ion-input type="text" [(ngModel)]="gasto.descripcion" name="descripcion" required></ion-input>
-    </ion-item>
+      <ion-item class="mb-3">
+        <ion-label position="floating">Descripción</ion-label>
+        <ion-input type="text" [(ngModel)]="gasto.descripcion" name="descripcion" required></ion-input>
+      </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Ubicación</ion-label>
-      <ion-input type="text" [(ngModel)]="gasto.ubicacion" name="ubicacion"></ion-input>
-    </ion-item>
+      <!-- Mostrar la imagen capturada -->
+      <div *ngIf="imagenRecibo" class="text-center mt-3">
+        <img [src]="imagenRecibo" alt="Imagen del recibo" class="img-fluid" style="max-width: 100%; margin-top: 10px;" />
+      </div>
 
-    <!-- Mostrar la imagen capturada -->
-    <div *ngIf="imagenRecibo" class="text-center mt-3">
-      <img [src]="imagenRecibo" alt="Imagen del recibo" style="max-width: 100%; margin-top: 10px;" />
-    </div>
+      <!-- Botones para tomar foto o seleccionar desde galería -->
+      <ion-button expand="block" color="secondary" (click)="seleccionarImagen()">Seleccionar Imagen</ion-button>
 
-    <!-- Botones para tomar foto o seleccionar desde galería -->
-
-    <ion-button expand="block" color="secondary" (click)="seleccionarImagen()">Seleccionar Imagen</ion-button>
-
-    <!-- Botón para guardar el gasto -->
-    <ion-button expand="block" color="success" type="submit">Guardar Gasto</ion-button>
-  </form>
+      <!-- Botones para guardar el gasto y cancelar -->
+      <div class="mt-3">
+        <ion-button expand="block" color="success" type="submit">Guardar Gasto</ion-button>
+        <ion-button expand="block" color="light" (click)="cancelar()" class="mt-2">Cancelar</ion-button>
+      </div>
+    </form>
+  </div>
 </ion-content>

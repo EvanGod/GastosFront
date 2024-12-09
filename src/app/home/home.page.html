@@ -38,6 +38,14 @@
             <p class="card-text">
               <small class="text-muted">Fecha: {{ gasto.fecha }}</small>
             </p>
+            <!-- Botón para abrir la ubicación en Google Maps -->
+            <ion-button 
+              *ngIf="gasto.ubicacion" 
+              expand="block" 
+              color="primary" 
+              (click)="verEnGoogleMaps(gasto.ubicacion)">
+              Ver en Google Maps
+            </ion-button>
           </div>
         </div>
       </div>

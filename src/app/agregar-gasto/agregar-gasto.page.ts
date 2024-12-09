@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { Geolocation } from '@capacitor/geolocation';
 import { Filesystem, Directory } from '@capacitor/filesystem';
 import { GastosService } from '../services/gastos.service';
 import { Router } from '@angular/router';
@@ -17,6 +18,8 @@ export class AgregarGastoPage {
     ubicacion: '',
   };
   imagenRecibo: string | null = null;
+  latitude: number = 0;
+  longitude: number = 0;
 
   constructor(
     private gastosService: GastosService,
@@ -81,6 +84,18 @@ export class AgregarGastoPage {
     }
   }
 
+  // Obtener la ubicación del dispositivo
+  async obtenerUbicacion() {
+    try {
+      const position = await Geolocation.getCurrentPosition();
+      this.latitude = position.coords.latitude;
+      this.longitude = position.coords.longitude;
+      this.gasto.ubicacion = `${this.latitude},${this.longitude}`; // Guardamos la ubicación en el objeto del gasto
+    } catch (error) {
+      console.error('Error al obtener la ubicación:', error);
+    }
+  }
+
   // Función para guardar la imagen localmente en el directorio adecuado
   async guardarImagenLocal(idGasto: number): Promise<string | null> {
     if (!this.imagenRecibo) {
@@ -111,6 +126,9 @@ export class AgregarGastoPage {
     }
 
     try {
+      // Obtener la ubicación antes de guardar el gasto
+      await this.obtenerUbicacion();
+
       // Envía los datos del gasto al backend
       const response: any = await this.gastosService.agregarGasto(this.gasto).toPromise();
 
@@ -128,5 +146,10 @@ export class AgregarGastoPage {
       console.error('Error al agregar el gasto:', error);
       alert('Error al agregar el gasto.');
     }
+  }
+
+  // Función para cancelar el proceso de agregar gasto y regresar al home
+  cancelar() {
+    this.router.navigate(['/home']); // Redirige al home
   }
 }

@@ -25,7 +25,7 @@ export class HomePage implements OnInit {
   agregarGasto() {
     this.router.navigate(['/agregar-gasto']); // Redirige a la página de agregar gasto
   }
-  
+
   async ionViewWillEnter() {
     this.cargarGastos();
   }
@@ -62,5 +62,11 @@ export class HomePage implements OnInit {
       console.error('Error al cargar la imagen local:', error);
       return null;
     }
+  }
+
+  // Función para abrir la ubicación en Google Maps
+  verEnGoogleMaps(ubicacion: string) {
+    const url = `https://www.google.com/maps?q=${ubicacion}`;
+    window.open(url, '_system'); // Esto abrirá el enlace en el navegador del dispositivo
   }
 }
