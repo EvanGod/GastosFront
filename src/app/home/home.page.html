@@ -1,15 +1,51 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Home</ion-title>
+    <ion-title>Mis Gastos</ion-title>
     <ion-buttons slot="end">
-      <button class="btn btn-danger" (click)="logout()">Cerrar sesión</button> <!-- Botón de cerrar sesión -->
+      <ion-button color="danger" (click)="logout()">Cerrar sesión</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <div class="container mt-3">
-    <h2>Bienvenido a la página principal</h2>
-    <!-- Aquí pueden ir más contenidos de tu página Home -->
+    <h4 class="text-center">Lista de Gastos</h4>
+
+    <div *ngIf="gastos.length === 0" class="text-center mt-5">
+      <p>No tienes gastos registrados</p>
+    </div>
+
+    <div *ngFor="let gasto of gastos" class="card mb-3 shadow-sm">
+      <div class="row g-0">
+        <div class="col-md-4">
+          <img
+            *ngIf="gasto.imagenLocal"
+            [src]="gasto.imagenLocal"
+            alt="Recibo"
+            class="img-fluid rounded-start"
+            style="height: 100%; object-fit: cover;"
+          />
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title">{{ gasto.descripcion }}</h5>
+            <p class="card-text">
+              <strong>Monto:</strong> ${{ gasto.monto }}
+            </p>
+            <p class="card-text">
+              <strong>Ubicación:</strong> {{ gasto.ubicacion || 'No especificada' }}
+            </p>
+            <p class="card-text">
+              <small class="text-muted">Fecha: {{ gasto.fecha }}</small>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botón para agregar un nuevo gasto -->
+    <ion-button expand="full" color="primary" (click)="agregarGasto()">
+      Agregar Gasto
+    </ion-button>
   </div>
 </ion-content>

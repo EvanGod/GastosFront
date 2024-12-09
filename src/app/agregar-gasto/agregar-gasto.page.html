@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Agregar Gasto</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form (ngSubmit)="agregarGasto()">
+    <ion-item>
+      <ion-label position="floating">Monto</ion-label>
+      <ion-input type="number" [(ngModel)]="gasto.monto" name="monto" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Descripción</ion-label>
+      <ion-input type="text" [(ngModel)]="gasto.descripcion" name="descripcion" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Ubicación</ion-label>
+      <ion-input type="text" [(ngModel)]="gasto.ubicacion" name="ubicacion"></ion-input>
+    </ion-item>
+
+    <!-- Mostrar la imagen capturada -->
+    <div *ngIf="imagenRecibo" class="text-center mt-3">
+      <img [src]="imagenRecibo" alt="Imagen del recibo" style="max-width: 100%; margin-top: 10px;" />
+    </div>
+
+    <ion-button expand="block" color="primary" (click)="tomarFoto()">Tomar Foto</ion-button>
+    <ion-button expand="block" color="success" type="submit">Guardar Gasto</ion-button>
+  </form>
+</ion-content>

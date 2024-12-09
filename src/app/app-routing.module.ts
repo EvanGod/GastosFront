@@ -24,6 +24,10 @@ const routes: Routes = [
     redirectTo: 'login',
     pathMatch: 'full',
   },
+  {
+    path: 'agregar-gasto',
+    loadChildren: () => import('./agregar-gasto/agregar-gasto.module').then( m => m.AgregarGastoPageModule)
+  },
 ];
 
 @NgModule({
