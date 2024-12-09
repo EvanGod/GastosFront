@@ -9,13 +9,10 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http'; // Importar HttpClientModule para hacer peticiones HTTP
-import { ModalService } from './modal.service'; // Importar el servicio ModalService
-import { MessageModalComponent } from './message-modal/message-modal.component'; // Importar el componente de la modal
 
 @NgModule({
   declarations: [
-    AppComponent,
-    MessageModalComponent,  // Declarar el componente de la modal aquí
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -24,7 +21,6 @@ import { MessageModalComponent } from './message-modal/message-modal.component';
     HttpClientModule,  // Asegurarse de importar HttpClientModule
   ],
   providers: [
-    ModalService,  // Asegurarse de que ModalService esté en los proveedores
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, // Asegurarse de que la estrategia de rutas sea la correcta
   ],
   bootstrap: [AppComponent],
