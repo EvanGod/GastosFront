@@ -3,6 +3,7 @@ import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { Filesystem, Directory } from '@capacitor/filesystem';
 import { GastosService } from '../services/gastos.service';
 import { Router } from '@angular/router';
+import { ActionSheetController } from '@ionic/angular'; // Agregado para la hoja de acción
 
 @Component({
   selector: 'app-agregar-gasto',
@@ -17,7 +18,38 @@ export class AgregarGastoPage {
   };
   imagenRecibo: string | null = null;
 
-  constructor(private gastosService: GastosService, private router: Router) {}
+  constructor(
+    private gastosService: GastosService,
+    private router: Router,
+    private actionSheetController: ActionSheetController // Inyectamos el ActionSheetController
+  ) {}
+
+  // Función para mostrar las opciones de la cámara o galería
+  async seleccionarImagen() {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Seleccionar una opción',
+      buttons: [
+        {
+          text: 'Tomar foto',
+          handler: () => {
+            this.tomarFoto();
+          },
+        },
+        {
+          text: 'Seleccionar desde galería',
+          handler: () => {
+            this.seleccionarDesdeGaleria();
+          },
+        },
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+        },
+      ],
+    });
+
+    await actionSheet.present();
+  }
 
   // Función para tomar una foto con la cámara
   async tomarFoto() {
@@ -31,6 +63,21 @@ export class AgregarGastoPage {
       this.imagenRecibo = image.dataUrl ?? null; // Mostramos una vista previa
     } catch (error) {
       console.error('Error al capturar la foto:', error);
+    }
+  }
+
+  // Función para seleccionar una imagen desde la galería
+  async seleccionarDesdeGaleria() {
+    try {
+      const image = await Camera.getPhoto({
+        quality: 90,
+        source: CameraSource.Photos,
+        resultType: CameraResultType.DataUrl, // Obtenemos la imagen como Data URL
+      });
+
+      this.imagenRecibo = image.dataUrl ?? null; // Mostramos una vista previa
+    } catch (error) {
+      console.error('Error al seleccionar la foto desde la galería:', error);
     }
   }
 

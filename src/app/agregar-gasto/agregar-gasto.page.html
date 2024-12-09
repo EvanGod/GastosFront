@@ -26,7 +26,11 @@
       <img [src]="imagenRecibo" alt="Imagen del recibo" style="max-width: 100%; margin-top: 10px;" />
     </div>
 
-    <ion-button expand="block" color="primary" (click)="tomarFoto()">Tomar Foto</ion-button>
+    <!-- Botones para tomar foto o seleccionar desde galería -->
+
+    <ion-button expand="block" color="secondary" (click)="seleccionarImagen()">Seleccionar Imagen</ion-button>
+
+    <!-- Botón para guardar el gasto -->
     <ion-button expand="block" color="success" type="submit">Guardar Gasto</ion-button>
   </form>
 </ion-content>
