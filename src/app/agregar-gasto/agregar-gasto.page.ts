@@ -5,6 +5,7 @@ import { Filesystem, Directory } from '@capacitor/filesystem';
 import { GastosService } from '../services/gastos.service';
 import { Router } from '@angular/router';
 import { ActionSheetController } from '@ionic/angular'; // Agregado para la hoja de acción
+import { PushNotificationService } from '../services/push-notification.service';
 
 @Component({
   selector: 'app-agregar-gasto',
@@ -24,7 +25,8 @@ export class AgregarGastoPage {
   constructor(
     private gastosService: GastosService,
     private router: Router,
-    private actionSheetController: ActionSheetController // Inyectamos el ActionSheetController
+    private actionSheetController: ActionSheetController, // Inyectamos el ActionSheetController
+    private pushNotificationService: PushNotificationService
   ) {}
 
   // Función para mostrar las opciones de la cámara o galería
@@ -125,12 +127,17 @@ export class AgregarGastoPage {
       return;
     }
 
+    const token = localStorage.getItem('pushToken'); // Obtener el token FCM
+
     try {
       // Obtener la ubicación antes de guardar el gasto
       await this.obtenerUbicacion();
 
-      // Envía los datos del gasto al backend
-      const response: any = await this.gastosService.agregarGasto(this.gasto).toPromise();
+      /// Envía los datos del gasto y el token de FCM al backend
+      const response: any = await this.gastosService.agregarGasto({
+        ...this.gasto,
+        userToken: token, // Enviar el token de FCM
+      }).toPromise();
 
       // Guarda la imagen localmente con el ID del gasto
       const imagenUri = await this.guardarImagenLocal(response.gastoId);

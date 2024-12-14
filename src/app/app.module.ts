@@ -4,6 +4,8 @@ import { RouteReuseStrategy } from '@angular/router';
 
 // Importar Ionic y los componentes necesarios
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { initializeApp } from "firebase/app";
+import { environment } from '../environments/environment';
 
 // Importar los componentes y servicios necesarios
 import { AppComponent } from './app.component';
@@ -26,4 +28,7 @@ import { HttpClientModule } from '@angular/common/http'; // Importar HttpClientM
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA], // Agregar esta línea para manejar los componentes personalizados de Ionic
 })
-export class AppModule {}
+export class AppModule {
+  constructor() {
+  initializeApp(environment.firebase); // Inicializa Firebase
+}}
